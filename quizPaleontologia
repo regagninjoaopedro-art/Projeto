@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Pré-Histórico | Expedição Paleontológica</title>
+    <!-- Carregando Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carregando Fontes Google (Cinzel para títulos temáticos e Inter para leitura limpa) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        jungle: {
+                            950: '#0a120d',
+                            900: '#132219',
+                            800: '#1c3325',
+                            700: '#274734',
+                        },
+                        amber: {
+                            450: '#f59e0b',
+                            550: '#d97706',
+                        },
+                        parchment: '#f4efe6',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'avatar-float': 'avatarFloat 2.8s ease-in-out infinite',
+                        'avatar-chomp': 'avatarChomp 1.8s ease-in-out infinite',
+                        'avatar-glow': 'avatarGlow 2.4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(14px) scale(0.98)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+                        },
+                        avatarFloat: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-4px) rotate(4deg)' },
+                        },
+                        avatarChomp: {
+                            '0%, 100%': { transform: 'scale(1) rotate(0deg)' },
+                            '25%': { transform: 'scale(1.16) rotate(-8deg)' },
+                            '50%': { transform: 'scale(1.05) rotate(6deg)' },
+                        },
+                        avatarGlow: {
+                            '0%, 100%': { transform: 'scale(1)', filter: 'drop-shadow(0 0 2px rgba(251,191,36,0.4))' },
+                            '50%': { transform: 'scale(1.12)', filter: 'drop-shadow(0 0 10px rgba(251,191,36,0.95))' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Cosméticos e Molduras Animadas */
+        @keyframes shimmerBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .cosmetic-amber-aura {
+            box-shadow: 0 0 18px rgba(245, 158, 11, 0.45), inset 0 0 12px rgba(245, 158, 11, 0.25);
+            border-color: #fbbf24 !important;
+        }
+        .cosmetic-emerald-pulse {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5), inset 0 0 12px rgba(16, 185, 129, 0.25);
+            border-color: #34d399 !important;
+        }
+        .cosmetic-magma-ring {
+            background: linear-gradient(120deg, rgba(249,115,22,0.28), rgba(220,38,38,0.28), rgba(245,158,11,0.35));
+            background-size: 200% 200%;
+            animation: shimmerBorder 3s ease infinite;
+            box-shadow: 0 0 22px rgba(249, 115, 22, 0.55);
+            border-color: #fb923c !important;
+        }
+        .cosmetic-card-royal {
+            box-shadow: 0 20px 50px -12px rgba(245, 158, 11, 0.28) !important;
+            border-color: rgba(251, 191, 36, 0.65) !important;
+        }
+        .cosmetic-card-bio {
+            box-shadow: 0 20px 50px -12px rgba(16, 185, 129, 0.3) !important;
+            border-color: rgba(52, 211, 153, 0.65) !important;
+        }
+    </style>
+</head>
+<body class="bg-jungle-950 text-parchment min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-jungle-950 relative overflow-x-hidden">
+
+    <!-- Elementos Decorativos de Fundo (Ambiente Jurássico) -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <!-- Luz ambiente âmbar e verde floresta -->
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-emerald-800/20 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 -right-24 w-80 h-80 bg-amber-600/15 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-24 left-1/3 w-96 h-96 bg-stone-800/30 rounded-full blur-3xl"></div>
+        
+        <!-- Marca d'água SVG de Pegada de Dinossauro -->
+        <svg class="absolute bottom-6 right-6 w-48 h-48 text-emerald-500/5 transform -rotate-12" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C11.2 2 10.5 3.5 10.2 6.2C9.9 8.8 10.5 11 11.2 11.5C10.1 12.1 9.5 13.5 9.8 15.2C10.2 17.5 11.5 19 12 19C12.5 19 13.8 17.5 14.2 15.2C14.5 13.5 13.9 12.1 12.8 11.5C13.5 11 14.1 8.8 13.8 6.2C13.5 3.5 12.8 2 12 2ZM6.5 6.5C5.7 6.8 5.5 8.5 6.2 10.8C6.9 13 8.1 14.5 8.9 14.2C9.7 13.9 9.8 12.2 9.1 9.9C8.4 7.7 7.3 6.2 6.5 6.5ZM17.5 6.5C16.7 6.2 15.6 7.7 14.9 9.9C14.2 12.2 14.3 13.9 15.1 14.2C15.9 14.5 17.1 13 17.8 10.8C18.5 8.5 18.3 6.8 17.5 6.5Z"/>
+        </svg>
+    </div>
+
+    <!-- Cabeçalho Superior -->
+    <header class="relative z-10 w-full max-w-3xl mx-auto px-4 pt-6 pb-2 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+            <!-- Ícone Fóssil Amonite em SVG ou Avatar Equipado -->
+            <div id="header-avatar-box" class="w-11 h-11 rounded-xl bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-inner text-2xl transition-all">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2z"/>
+                    <path d="M12 12c0-2.8 2.2-5 5-5s5 2.2 5 5-2.2 5-5 5c-4.4 0-8-3.6-8-8 0-5.5 4.5-10 10-10"/>
+                    <path d="M19 2c2.2 2.2 3 5.5 3 10 0 6.1-4.9 11-11 11-5.5 0-9-4.5-9-9"/>
+                </svg>
+            </div>
+            <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span id="header-subtitle" class="text-xs uppercase tracking-widest text-amber-400/80 font-semibold">Expedição Jurássica</span>
+                    <span id="header-equipped-title" class="hidden px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[10px] font-bold uppercase tracking-wider">
+                        Título
+                    </span>
+                </div>
+                <h1 class="font-display font-bold text-lg sm:text-xl text-parchment tracking-wide">Quiz Pré-Histórico</h1>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+            <!-- Saldo de Pontos (Âmbar) -->
+            <div class="flex items-center gap-1.5 bg-jungle-900/90 border border-amber-500/40 px-3.5 py-1.5 rounded-full shadow-md" title="Seus pontos acumulados">
+                <span class="text-sm">🟠</span>
+                <span id="wallet-points-display" class="font-mono text-sm font-bold text-amber-300">0</span>
+                <span class="text-[11px] uppercase tracking-wider text-amber-400/80 font-semibold hidden sm:inline">pts</span>
+            </div>
+
+            <!-- Botão da Aba de Loja -->
+            <button id="btn-toggle-shop" type="button" class="flex items-center gap-1.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400/40 text-amber-300 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold transition cursor-pointer shadow-md">
+                <span>🛒</span>
+                <span>Loja</span>
+            </button>
+
+            <!-- Cronômetro em Tempo Real (Oculto na tela inicial) -->
+            <div id="timer-badge" class="hidden items-center gap-2 bg-jungle-900/90 border border-emerald-700/40 px-3.5 py-1.5 rounded-full shadow-md">
+                <svg class="w-4 h-4 text-amber-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span id="timer-display" class="font-mono text-sm font-semibold text-amber-300">00:00</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Painel de Perfil Fixo no Canto Esquerdo (Desktop) / Compacto no Topo (Mobile) -->
+    <aside id="left-profile-sidebar" class="relative lg:fixed lg:left-4 lg:top-24 z-20 w-full max-w-2xl lg:w-64 mx-auto px-4 lg:px-0 mt-2 lg:mt-0">
+        <div id="profile-sidebar-card" class="bg-jungle-900/90 backdrop-blur-md border border-emerald-800/60 rounded-2xl p-4 shadow-xl transition-all">
+            <div class="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-emerald-800/50">
+                <span class="text-[11px] uppercase tracking-widest text-amber-400 font-bold">Perfil do Explorador</span>
+                <button id="btn-edit-profile-sidebar" type="button" class="text-xs bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400/40 text-amber-300 px-2.5 py-1 rounded-lg font-semibold transition cursor-pointer">
+                    Alterar Perfil
+                </button>
+            </div>
+
+            <!-- Avatar, Nome e Título -->
+            <div class="flex items-center gap-3 mb-3.5">
+                <div id="sidebar-avatar-box" class="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-2xl flex-shrink-0 transition-all">
+                    🐚
+                </div>
+                <div class="min-w-0 flex-grow">
+                    <label for="player-name-input" class="sr-only">Nome do Explorador</label>
+                    <input
+                        type="text"
+                        id="player-name-input"
+                        maxlength="22"
+                        placeholder="Seu nome..."
+                        class="w-full bg-jungle-950/80 border border-emerald-800/70 focus:border-amber-400 rounded-lg px-2.5 py-1 text-sm font-bold text-parchment placeholder-stone-500 outline-none transition"
+                    />
+                    <span id="sidebar-equipped-title" class="inline-block mt-1 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[10px] font-bold uppercase tracking-wider truncate max-w-full">
+                        Aprendiz de Campo
+                    </span>
+                </div>
+            </div>
+
+            <!-- Visualização de Ossos Acumulados -->
+            <div class="bg-jungle-950/90 border border-amber-500/30 rounded-xl px-3 py-2 flex items-center justify-between">
+                <span class="text-xs text-stone-400 font-medium">Seus Ossos:</span>
+                <div class="flex items-center gap-1.5">
+                    <span class="text-base">🦴</span>
+                    <span id="sidebar-bones-display" class="font-mono text-sm font-black text-amber-300">0</span>
+                    <span class="text-[11px] uppercase tracking-wider text-amber-400/80 font-bold">ossos</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Área Principal Centralizada -->
+    <main class="relative z-10 flex-grow flex items-center justify-center px-4 py-6">
+        <div class="w-full max-w-2xl">
+            
+            <!-- ========================================== -->
+            <!-- TELA 0: TELA INICIAL                       -->
+            <!-- ========================================== -->
+            <section id="screen-start" class="bg-jungle-900/80 backdrop-blur-md border border-emerald-800/50 rounded-3xl p-6 sm:p-10 shadow-2xl text-center animate-fade-in">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold tracking-wider uppercase mb-5">
+                    <span>🦖</span> Era Mesozoica & Era do Gelo
+                </div>
+
+                <h2 class="font-display text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-orange-400 mb-3 leading-tight">
+                    QUIZ PRÉ-HISTÓRICO
+                </h2>
+
+                <p class="text-stone-300 text-sm sm:text-base max-w-lg mx-auto mb-7 leading-relaxed">
+                    Vamos ver se você realmente entende de dinossauros e criaturas pré-históricas! Escolha o nível da sua expedição e responda no menor tempo possível.
+                </p>
+
+                <!-- Seleção de Níveis de Dificuldade -->
+                <div class="mb-8 text-left">
+                    <span class="block text-xs uppercase tracking-widest text-amber-400/90 font-bold mb-3 text-center">
+                        Selecione o Nível da Expedição
+                    </span>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5" id="difficulty-cards">
+                        <!-- Nível 1: Explorador -->
+                        <button type="button" data-difficulty="facil" class="difficulty-card group relative bg-jungle-950/80 border-2 border-amber-400 rounded-2xl p-4 text-left transition-all cursor-pointer shadow-lg shadow-amber-500/10">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-2xl">🌿</span>
+                                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                    5 Perguntas
+                                </span>
+                            </div>
+                            <h3 class="font-bold text-base text-parchment group-hover:text-amber-300 transition">Explorador</h3>
+                            <span class="text-[11px] uppercase tracking-wider text-emerald-400 font-semibold block mb-1.5">Nível Fácil</span>
+                            <p class="text-xs text-stone-400 leading-relaxed">Espécies icônicas e gigantes famosos da pré-história.</p>
+                        </button>
+
+                        <!-- Nível 2: Paleontólogo -->
+                        <button type="button" data-difficulty="medio" class="difficulty-card group relative bg-jungle-950/60 border-2 border-emerald-800/50 hover:border-emerald-600/80 rounded-2xl p-4 text-left transition-all cursor-pointer">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-2xl">🦴</span>
+                                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                    8 Perguntas
+                                </span>
+                            </div>
+                            <h3 class="font-bold text-base text-parchment group-hover:text-amber-300 transition">Paleontólogo</h3>
+                            <span class="text-[11px] uppercase tracking-wider text-amber-400 font-semibold block mb-1.5">Nível Médio</span>
+                            <p class="text-xs text-stone-400 leading-relaxed">Períodos geológicos, anatomia e fauna variada.</p>
+                        </button>
+
+                        <!-- Nível 3: Mestre Jurássico -->
+                        <button type="button" data-difficulty="dificil" class="difficulty-card group relative bg-jungle-950/60 border-2 border-emerald-800/50 hover:border-emerald-600/80 rounded-2xl p-4 text-left transition-all cursor-pointer">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-2xl">🌋</span>
+                                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-orange-500/20 text-orange-300 border border-orange-500/30">
+                                    12 Perguntas
+                                </span>
+                            </div>
+                            <h3 class="font-bold text-base text-parchment group-hover:text-amber-300 transition">Mestre Jurássico</h3>
+                            <span class="text-[11px] uppercase tracking-wider text-orange-400 font-semibold block mb-1.5">Nível Difícil</span>
+                            <p class="text-xs text-stone-400 leading-relaxed">Desafio completo com espécies raras e eras antigas.</p>
+                        </button>
+                    </div>
+                </div>
+
+                <button id="btn-start" type="button" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-jungle-950 font-bold text-lg px-8 py-4 rounded-2xl shadow-lg shadow-amber-600/20 transform transition active:scale-95 cursor-pointer">
+                    <span id="btn-start-text">Iniciar Expedição (5 Perguntas)</span>
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </button>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- TELAS DE PERGUNTAS DO QUIZ                 -->
+            <!-- ========================================== -->
+            <!-- TELAS 1 A 5: PERGUNTAS DO QUIZ             -->
+            <!-- ========================================== -->
+            <section id="screen-quiz" class="hidden bg-jungle-900/85 backdrop-blur-md border border-emerald-800/50 rounded-3xl p-6 sm:p-10 shadow-2xl">
+                <!-- Barra de Progresso e Indicador de Pergunta -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center text-xs sm:text-sm font-semibold text-stone-400 mb-2">
+                        <span id="question-counter" class="text-amber-400 uppercase tracking-wider">Pergunta 1 de 5</span>
+                        <span id="score-live">Acertos: 0</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-jungle-950 rounded-full overflow-hidden border border-emerald-900/50">
+                        <div id="progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-amber-400 rounded-full transition-all duration-500" style="width: 20%"></div>
+                    </div>
+                </div>
+
+                <!-- Emblema Visual Temático de Expedição & Geologia (Neutro, sem entregar a resposta) -->
+                <div class="relative overflow-hidden bg-gradient-to-br from-jungle-950/90 via-emerald-950/50 to-jungle-950/90 border border-emerald-700/40 rounded-2xl p-4 sm:p-5 mb-6 flex items-center gap-4 shadow-inner">
+                    <!-- Padrão sutil de grade topográfica no fundo -->
+                    <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#fbbf24 1px, transparent 1px); background-size: 16px 16px;"></div>
+
+                    <!-- Moldura do Desenho SVG -->
+                    <div id="question-emblem-container" class="relative z-10 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-amber-500/10 border border-amber-400/30 flex items-center justify-center text-amber-400 flex-shrink-0 shadow-lg shadow-amber-950/40 transition-transform duration-500">
+                        <!-- SVG injetado dinamicamente pelo JavaScript -->
+                    </div>
+
+                    <!-- Metadados de Campo e Período -->
+                    <div class="relative z-10 flex-grow min-w-0">
+                        <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                            <span id="field-log-tag" class="text-[11px] font-mono uppercase tracking-widest text-amber-400/90 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md">
+                                Registro de Campo #01
+                            </span>
+                            <span id="question-era" class="inline-flex items-center px-2.5 py-0.5 rounded-md bg-emerald-950/90 border border-emerald-700/40 text-emerald-300 text-xs font-medium truncate">
+                                Período Cretáceo
+                            </span>
+                        </div>
+                        <p id="emblem-caption" class="text-xs sm:text-sm text-stone-400 italic truncate">
+                            Análise de estratos e vestígios fósseis da expedição.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Enunciado da Pergunta -->
+                <h2 id="question-text" class="text-xl sm:text-2xl font-bold text-parchment leading-snug mb-3">
+                    1- Qual dinossauro carnívoro tinha o nome que significa "Lagarto Tirano Rei"?
+                </h2>
+
+                <!-- Balão de Dica Sutil / Piada Paleontológica -->
+                <div class="bg-amber-500/10 border border-amber-500/25 rounded-xl px-4 py-2.5 mb-6 flex items-start gap-2.5">
+                    <span class="text-base leading-none mt-0.5">💡</span>
+                    <p id="question-hint" class="text-xs sm:text-sm text-amber-200/90 italic leading-relaxed">
+                        Nota do diário: Ele definitivamente não era bom em bater palmas ou fazer flexões.
+                    </p>
+                </div>
+
+                <!-- Formulário de Resposta (Equivalente ao input() do Python) -->
+                <form id="answer-form" class="space-y-4" autocomplete="off">
+                    <div>
+                        <label for="answer-input" class="block text-xs uppercase tracking-wider text-stone-400 font-semibold mb-2">
+                            Sua resposta:
+                        </label>
+                        <input 
+                            type="text" 
+                            id="answer-input" 
+                            placeholder="Digite o nome do animal aqui..." 
+                            class="w-full bg-jungle-950/90 border-2 border-emerald-800/70 focus:border-amber-400 rounded-2xl px-4 py-3.5 text-parchment placeholder-stone-500 text-base sm:text-lg outline-none transition shadow-inner"
+                            required
+                        />
+                    </div>
+
+                    <!-- Aviso de campo vazio (substitui alert) -->
+                    <p id="validation-msg" class="hidden text-sm text-amber-400 font-medium">
+                        ⚠️ Por favor, digite uma resposta antes de confirmar.
+                    </p>
+
+                    <!-- Botão de Enviar Resposta -->
+                    <button id="btn-submit" type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base sm:text-lg py-3.5 px-6 rounded-2xl shadow-lg shadow-emerald-900/50 transition transform active:scale-98 cursor-pointer flex items-center justify-center gap-2">
+                        <span>Confirmar Resposta</span>
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </button>
+                </form>
+
+                <!-- Área de Feedback Imediato (Equivalente ao print('Parabéns...') / print('Errou...')) -->
+                <div id="feedback-box" class="hidden mt-6 rounded-2xl p-5 border transition-all animate-fade-in">
+                    <div class="flex items-start gap-3.5">
+                        <div id="feedback-icon" class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xl font-bold">
+                            <!-- Ícone dinâmico -->
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <h3 id="feedback-title" class="font-bold text-lg">
+                                    Parabéns, acertou!
+                                </h3>
+                                <span id="feedback-points-badge" class="hidden px-2.5 py-1 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold">
+                                    +100 pts (+50 bônus velocidade)
+                                </span>
+                            </div>
+                            <p id="feedback-detail" class="text-sm mt-1 opacity-90">
+                                Curiosidade paleontológica aqui.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Botão para avançar para a próxima tela -->
+                    <button id="btn-next" type="button" class="mt-4 w-full bg-parchment hover:bg-white text-jungle-950 font-bold text-base py-3 px-6 rounded-xl shadow-md transition transform active:scale-98 cursor-pointer flex items-center justify-center gap-2">
+                        <span id="btn-next-text">Próxima Pergunta</span>
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </button>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- TELA FINAL: RESULTADO E TEMPO              -->
+            <!-- ========================================== -->
+            <section id="screen-result" class="hidden bg-jungle-900/90 backdrop-blur-md border border-amber-500/40 rounded-3xl p-6 sm:p-10 shadow-2xl text-center">
+                <div class="w-20 h-20 mx-auto mb-4 rounded-3xl bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center text-jungle-950 shadow-xl shadow-amber-600/30">
+                    <svg class="w-11 h-11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                    </svg>
+                </div>
+
+                <span id="result-difficulty-badge" class="inline-block px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-wider mb-3">
+                    Nível Explorador • 5 Perguntas
+                </span>
+
+                <h2 class="font-display text-2xl sm:text-4xl font-black text-amber-300 mb-2">
+                    RESULTADO FINAL
+                </h2>
+
+                <p id="final-score-text" class="text-lg sm:text-xl font-medium text-parchment mb-6">
+                    Você acertou <span class="text-amber-400 font-bold">0</span> de 5 perguntas.
+                </p>
+
+                <!-- Cards de Estatísticas: Acertos, Pontos Ganhos e Tempo de Demora -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-6">
+                    <div class="bg-jungle-950/80 border border-emerald-800/50 rounded-2xl p-4">
+                        <span class="text-xs uppercase tracking-wider text-stone-400 block mb-1">Acertos</span>
+                        <div class="text-2xl sm:text-3xl font-black text-emerald-400">
+                            <span id="stat-correct">0</span><span id="stat-total" class="text-base text-stone-500 font-semibold"> / 5</span>
+                        </div>
+                        <span id="stat-accuracy" class="text-xs text-stone-400 mt-1 block">0% de precisão</span>
+                    </div>
+
+                    <div class="bg-jungle-950/80 border border-amber-500/50 rounded-2xl p-4">
+                        <span class="text-xs uppercase tracking-wider text-stone-400 block mb-1">Ossos Ganhos</span>
+                        <div id="stat-points-earned" class="text-2xl sm:text-3xl font-black text-amber-400">
+                            +0 🦴
+                        </div>
+                        <span id="stat-speed-bonus" class="text-xs text-amber-300/80 mt-1 block">+0 bônus de velocidade</span>
+                    </div>
+
+                    <div class="bg-jungle-950/80 border border-amber-700/40 rounded-2xl p-4">
+                        <span class="text-xs uppercase tracking-wider text-stone-400 block mb-1">Tempo Total</span>
+                        <div id="stat-time" class="text-2xl sm:text-3xl font-black text-orange-300">
+                            0s
+                        </div>
+                        <span class="text-xs text-stone-400 mt-1 block">Duração do quiz</span>
+                    </div>
+                </div>
+
+                <!-- Título Paleontológico conquistado -->
+                <div class="bg-emerald-950/60 border border-emerald-700/40 rounded-2xl p-4 mb-8">
+                    <span class="text-xs uppercase tracking-wider text-emerald-400 font-bold block mb-1">Classificação da Expedição</span>
+                    <p id="rank-title" class="text-base sm:text-lg font-bold text-parchment">Paleontólogo Iniciante</p>
+                    <p id="rank-desc" class="text-xs sm:text-sm text-stone-300 mt-1">Continue escavando para descobrir mais segredos da pré-história!</p>
+                </div>
+
+                <!-- Botões de Ação Final -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <button id="btn-restart" type="button" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-jungle-950 font-bold text-base px-6 py-3.5 rounded-2xl shadow-lg transition transform active:scale-95 cursor-pointer">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        <span>Jogar Novamente</span>
+                    </button>
+
+                    <button id="btn-result-shop" type="button" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/50 font-bold text-base px-6 py-3.5 rounded-2xl transition transform active:scale-95 cursor-pointer">
+                        <span>🛒</span>
+                        <span>Visitar Loja</span>
+                    </button>
+
+                    <button id="btn-change-level" type="button" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-jungle-950 hover:bg-emerald-950/80 text-parchment border border-emerald-700/60 font-semibold text-base px-6 py-3.5 rounded-2xl transition transform active:scale-95 cursor-pointer">
+                        <svg class="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+                        </svg>
+                        <span>Níveis</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- ABA DE LOJA DA EXPEDIÇÃO                   -->
+            <!-- ========================================== -->
+            <section id="screen-shop" class="hidden bg-jungle-900/90 backdrop-blur-md border border-amber-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl animate-fade-in">
+                <div class="flex flex-wrap items-center justify-between gap-4 pb-5 mb-6 border-b border-emerald-800/50">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest text-amber-400 font-bold block">Mercado do Acampamento</span>
+                        <h2 class="font-display text-2xl sm:text-3xl font-black text-parchment">Loja Paleontológica</h2>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="bg-jungle-950/90 border border-amber-500/40 px-4 py-2 rounded-2xl flex items-center gap-2">
+                            <span class="text-lg">🦴</span>
+                            <div>
+                                <span class="text-[10px] uppercase tracking-wider text-stone-400 block leading-none">Ossos Disponíveis</span>
+                                <span id="shop-balance-display" class="font-mono text-base font-black text-amber-300">0 ossos</span>
+                            </div>
+                        </div>
+
+                        <button id="btn-close-shop" type="button" class="bg-jungle-950 hover:bg-emerald-950 text-stone-300 hover:text-parchment border border-emerald-800/60 px-4 py-2.5 rounded-xl text-sm font-semibold transition cursor-pointer">
+                            ← Voltar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mensagem de status da loja (compra/equipar/saldo insuficiente) -->
+                <div id="shop-toast" class="hidden mb-5 px-4 py-3 rounded-xl text-sm font-semibold border transition-all"></div>
+
+                <!-- Abas internas da Loja -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6 bg-jungle-950/80 p-1.5 rounded-2xl border border-emerald-900/60">
+                    <button type="button" data-shop-tab="avatars" class="shop-tab-btn py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold bg-amber-500 text-jungle-950 transition cursor-pointer">
+                        🦖 Fotos Animadas
+                    </button>
+                    <button type="button" data-shop-tab="cosmetics" class="shop-tab-btn py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold text-stone-300 hover:text-parchment transition cursor-pointer">
+                        ✨ Cosméticos
+                    </button>
+                    <button type="button" data-shop-tab="titles" class="shop-tab-btn py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold text-stone-300 hover:text-parchment transition cursor-pointer">
+                        🏅 Títulos
+                    </button>
+                    <button type="button" data-shop-tab="facts" class="shop-tab-btn py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold text-stone-300 hover:text-parchment transition cursor-pointer">
+                        📜 Curiosidades
+                    </button>
+                </div>
+
+                <!-- Grade de Itens da Loja -->
+                <div id="shop-items-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[55vh] overflow-y-auto pr-1">
+                    <!-- Itens renderizados via JavaScript -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="relative z-10 text-center py-4 px-4 text-xs text-stone-500">
+        Quiz Interativo de Dinossauros e Animais Pré-Históricos • Expedição Paleontológica
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- LÓGICA JAVASCRIPT DO QUIZ                  -->
+    <!-- ========================================== -->
+    <script>
+        /**
+         * Banco de dados organizado por níveis de dificuldade:
+         * - facil (Explorador): 5 perguntas
+         * - medio (Paleontólogo): 8 perguntas
+         * - dificil (Mestre Jurássico): 12 perguntas
+         */
+        const quizLevels = {
+            facil: {
+                name: "Nível Explorador (Fácil)",
+                shortName: "Explorador",
+                questions: [
+                    {
+                        era: "Período Cretáceo • Terópodes",
+                        question: "1- Qual dinossauro carnívoro tinha o nome que significa 'Lagarto Tirano Rei'?",
+                        hint: "Nota do diário: Ele definitivamente não era bom em bater palmas ou fazer flexões.",
+                        acceptedAnswers: ["tiranossauro", "tiranossauro rex", "t-rex", "trex", "tyrannosaurus", "tyrannosaurus rex"],
+                        displayAnswer: "Tiranossauro Rex",
+                        fact: "O Tiranossauro Rex possuía uma das mordidas mais fortes de todos os animais terrestres que já existiram!"
+                    },
+                    {
+                        era: "Período Cretáceo • Ceratopsídeos",
+                        question: "2- Qual dinossauro herbívoro era famoso por ter três chifres no rosto e um grande escudo ósseo?",
+                        hint: "Piada de acampamento: Um rinoceronte pré-histórico que já vinha com escudo de fábrica!",
+                        acceptedAnswers: ["triceratops", "triceratopo", "triceratope"],
+                        displayAnswer: "Triceratops",
+                        fact: "O escudo ósseo e os três chifres do Triceratops serviam tanto para defesa contra predadores quanto para exibição."
+                    },
+                    {
+                        era: "Era do Gelo • Pleistoceno",
+                        question: "3- Qual animal pré-histórico gigante era parente dos elefantes e tinha longos pelos e presas curvas?",
+                        hint: "Nota do diário: Parece que alguém deixou um elefante passar o inverno inteiro sem ir ao cabeleireiro.",
+                        acceptedAnswers: ["mamute", "mamute lanoso", "mamute-lanoso"],
+                        displayAnswer: "Mamute",
+                        fact: "Os mamutes-lanosos tinham uma camada espessa de gordura e pelos de até 90 cm para sobreviver ao frio extremo."
+                    },
+                    {
+                        era: "Período Cretáceo • Dromeossaurídeos",
+                        question: "4- Qual ágil dinossauro predador possuía uma garra curva retrátil em cada pé e tinha o corpo coberto de penas?",
+                        hint: "Dica sutil: Nos filmes parecia um lagarto gigante, mas na vida real era quase um peru ninja muito zangado.",
+                        acceptedAnswers: ["velociraptor", "raptor"],
+                        displayAnswer: "Velociraptor",
+                        fact: "Na realidade, o Velociraptor tinha o tamanho aproximado de um peru grande e era coberto por penas!"
+                    },
+                    {
+                        era: "Período Jurássico • Estegossaurídeos",
+                        question: "5- Qual dinossauro herbívoro possuía duas fileiras de placas ósseas nas costas e quatro espigões na cauda?",
+                        hint: "Piada de acampamento: Andava com um painel solar nas costas e um alerta bem pontiagudo para quem chegasse por trás.",
+                        acceptedAnswers: ["estegossauro", "stegosaurus"],
+                        displayAnswer: "Estegossauro",
+                        fact: "Os quatro espigões na ponta da cauda do Estegossauro são chamados pelos paleontólogos de 'thagomizer'."
+                    }
+                ]
+            },
+            medio: {
+                name: "Nível Paleontólogo (Médio)",
+                shortName: "Paleontólogo",
+                questions: [
+                    {
+                        era: "Período Cretáceo • Répteis Voadores",
+                        question: "1- Qual réptil voador pré-histórico possuía uma grande crista na cabeça e asas feitas de membrana?",
+                        hint: "Nota do diário: O verdadeiro rei dos ares do Cretáceo — e o 'P' inicial adora ficar mudo na pronúncia.",
+                        acceptedAnswers: ["pteranodon", "pteranodonte", "pterodactilo", "pterodactyl"],
+                        displayAnswer: "Pteranodon",
+                        fact: "Embora muitos o chamem de dinossauro, o Pteranodon era um pterossauro — um réptil voador com até 7 metros de envergadura."
+                    },
+                    {
+                        era: "Período Cretáceo • Espinossaurídeos",
+                        question: "2- Qual gigantesco dinossauro semiaquático tinha uma enorme vela dorsal nas costas e focinho semelhante ao de um crocodilo?",
+                        hint: "Piada de acampamento: Um pescador de rios antigos que já carregava o próprio barco a vela nas costas.",
+                        acceptedAnswers: ["espinossauro", "spinosaurus"],
+                        displayAnswer: "Espinossauro",
+                        fact: "O Espinossauro foi um dos maiores dinossauros carnívoros conhecidos, adaptado para caçar grandes peixes nos rios do norte da África."
+                    },
+                    {
+                        era: "Período Cretáceo • Dinossauros Blindados",
+                        question: "3- Qual dinossauro herbívoro tinha o corpo coberto por uma armadura óssea e uma pesada clava na ponta da cauda?",
+                        hint: "Dica sutil: O tanque de guerra blindado da natureza — nem o T-Rex gostava de encarar essa marreta.",
+                        acceptedAnswers: ["anquilossauro", "ankylosaurus"],
+                        displayAnswer: "Anquilossauro",
+                        fact: "A clava óssea da cauda do Anquilossauro era forte o suficiente para quebrar os ossos das pernas de um predador."
+                    },
+                    {
+                        era: "Era do Gelo • Felinos Pré-Históricos",
+                        question: "4- Qual famoso felino pré-histórico da Era do Gelo era conhecido por seus longos dentes caninos superiores?",
+                        hint: "Piada de acampamento: Um gatinho pré-histórico que definitivamente precisava de uma escova de dentes extra grande.",
+                        acceptedAnswers: ["tigre-dentes-de-sabre", "tigre dentes de sabre", "dentes de sabre", "dentes-de-sabre", "smilodon", "esmilodonte"],
+                        displayAnswer: "Tigre-dentes-de-sabre",
+                        fact: "O Smilodon (tigre-dentes-de-sabre) podia abrir sua mandíbula em um ângulo de quase 120 graus para usar seus caninos de até 28 cm."
+                    },
+                    {
+                        era: "Período Jurássico • Saurópodes",
+                        question: "5- Qual dinossauro saurópode de pescoço muito longo tinha as patas dianteiras maiores que as traseiras, lembrando uma girafa?",
+                        hint: "Nota do diário: Com essa postura inclinada, ele alcançava as folhas mais altas sem nem precisar ficar na ponta dos pés.",
+                        acceptedAnswers: ["braquiossauro", "brachiosaurus"],
+                        displayAnswer: "Braquiossauro",
+                        fact: "O nome Braquiossauro significa 'lagarto braço', justamente porque seus membros anteriores eram mais longos que os posteriores."
+                    },
+                    {
+                        era: "Escala de Tempo Geológico • Era Mesozoica",
+                        question: "6- Qual foi o último período da Era Mesozoica, marcado pelo auge dos dinossauros e pela extinção em massa há 66 milhões de anos?",
+                        hint: "Dica sutil: Vem logo depois do Jurássico e seu nome vem do latim 'creta', que significa giz!",
+                        acceptedAnswers: ["cretaceo", "periodo cretaceo"],
+                        displayAnswer: "Cretáceo",
+                        fact: "O Período Cretáceo durou cerca de 79 milhões de anos e terminou com o impacto de um asteroide na península de Yucatán."
+                    },
+                    {
+                        era: "Período Neogeno • Oceanos Antigos",
+                        question: "7- Qual gigante tubarão pré-histórico teve seu nome inspirado em seus dentes triangulares enormes?",
+                        hint: "Piada de acampamento: Fazia o tubarão branco moderno parecer uma simples sardinha de aquário.",
+                        acceptedAnswers: ["megalodon", "megalodonte"],
+                        displayAnswer: "Megalodon",
+                        fact: "O nome Megalodon significa 'dente grande'. Ele podia atingir entre 15 e 18 metros de comprimento!"
+                    },
+                    {
+                        era: "Era Mesozoica • Répteis Marinhos",
+                        question: "8- Qual réptil marinho pré-histórico possuía quatro nadadeiras largas e um pescoço extremamente comprido?",
+                        hint: "Nota do diário: Muitos juram que um primo distante dele tirou férias no Lago Ness, na Escócia...",
+                        acceptedAnswers: ["plesiossauro", "plesiosaurus"],
+                        displayAnswer: "Plesiossauro",
+                        fact: "Os plesiossauros respiravam ar como as baleias atuais e usavam suas quatro nadadeiras para 'voar' debaixo d'água."
+                    }
+                ]
+            },
+            dificil: {
+                name: "Nível Mestre Jurássico (Difícil)",
+                shortName: "Mestre Jurássico",
+                questions: [
+                    {
+                        era: "Período Jurássico • Transição Evolutiva",
+                        question: "1- Qual famoso fóssil de transição possuía penas e asas como uma ave, mas dentes, garras nas asas e cauda óssea como um dinossauro?",
+                        hint: "Nota do diário: Metade dinossauro, metade pássaro — a primeira tentativa da natureza de tirar brevete de piloto!",
+                        acceptedAnswers: ["archaeopteryx", "arqueopterix"],
+                        displayAnswer: "Archaeopteryx",
+                        fact: "Descoberto na Alemanha em 1861, o Archaeopteryx é considerado um dos elos mais importantes entre os dinossauros terópodes e as aves."
+                    },
+                    {
+                        era: "Período Cretáceo • Azhdarchídeos",
+                        question: "2- Qual foi um dos maiores animais voadores de todos os tempos, um pterossauro gigante com envergadura de até 11 metros?",
+                        hint: "Dica sutil: Tem o tamanho de um avião monomotor e recebeu o nome de uma divindade serpente emplumada asteca.",
+                        acceptedAnswers: ["quetzalcoatlus"],
+                        displayAnswer: "Quetzalcoatlus",
+                        fact: "Em pé no chão, o Quetzalcoatlus tinha quase a altura de uma girafa moderna!"
+                    },
+                    {
+                        era: "Geologia Histórica • Paleogeografia",
+                        question: "3- Como era chamado o único supercontinente que reunia todas as massas de terra do planeta durante o início da era dos dinossauros?",
+                        hint: "Piada de acampamento: Naquela época dava para ir do Brasil até a África a pé sem precisar de passaporte!",
+                        acceptedAnswers: ["pangeia", "pangaea"],
+                        displayAnswer: "Pangeia",
+                        fact: "O nome Pangeia vem do grego e significa 'toda a Terra'. Sua fragmentação isolou populações de dinossauros em diferentes continentes."
+                    },
+                    {
+                        era: "Período Cretáceo • Marginocefalia",
+                        question: "4- Qual dinossauro herbívoro possuía um crânio em forma de cúpula com até 25 centímetros de osso maciço no topo da cabeça?",
+                        hint: "Piada de acampamento: Esse aí nunca precisou usar capacete de obra — e adorava dar umas cabeçadas!",
+                        acceptedAnswers: ["paquicefalossauro", "pachycephalosaurus"],
+                        displayAnswer: "Paquicefalossauro",
+                        fact: "Seu nome significa 'lagarto de cabeça grossa', e cientistas acreditam que usava a cúpula em disputas territoriais."
+                    },
+                    {
+                        era: "Período Devoniano • Placodermos",
+                        question: "5- Qual gigantesco peixe pré-histórico blindado do Devoniano possuía placas ósseas afiadas no lugar de dentes?",
+                        hint: "Nota do diário: Uma guilhotina subaquática de 6 metros que mastigava armaduras antes mesmo de existirem dinossauros.",
+                        acceptedAnswers: ["dunkleosteus"],
+                        displayAnswer: "Dunkleosteus",
+                        fact: "O Dunkleosteus era o predador de topo dos mares devonianos e possuía uma das mordidas mais rápidas e poderosas da natureza."
+                    },
+                    {
+                        era: "Período Cretáceo • Abelissaurídeos",
+                        question: "6- Qual dinossauro carnívoro sul-americano possuía dois chifres distintos acima dos olhos e braços extremamente curtos?",
+                        hint: "Piada de acampamento: Um touro carnívoro que fazia os braços do T-Rex parecerem compridos!",
+                        acceptedAnswers: ["carnotauro", "carnotaurus"],
+                        displayAnswer: "Carnotauro",
+                        fact: "Descoberto na Argentina, o Carnotauro ('touro carnívoro') era um corredor veloz com músculos caudais muito desenvolvidos."
+                    },
+                    {
+                        era: "Período Jurássico • Diplodocídeos",
+                        question: "7- Qual saurópode de corpo alongado possuía uma cauda extremamente fina na ponta que funcionava como um chicote supersônico?",
+                        hint: "Dica sutil: Com 27 metros de comprimento, ele literalmente quebrava a barreira do som com a ponta da cauda.",
+                        acceptedAnswers: ["diplodoco", "diplodocus"],
+                        displayAnswer: "Diplodoco",
+                        fact: "Simulações indicam que a ponta da cauda do Diplodoco podia estalar no ar produzindo um som ensurdecedor."
+                    },
+                    {
+                        era: "Período Cretáceo • Terizinossaurídeos",
+                        question: "8- Qual bizarro dinossauro herbívoro ou onívoro possuía as maiores garras conhecidas do reino animal, chegando a 1 metro de comprimento?",
+                        hint: "Piada de acampamento: O 'Edward Mãos de Tesoura' do Cretáceo — mas que só usava as garras para fazer salada!",
+                        acceptedAnswers: ["therizinossauro", "terizinossauro", "therizinosaurus"],
+                        displayAnswer: "Therizinossauro",
+                        fact: "Apesar das garras assustadoras em forma de foice, o Therizinossauro usava-as principalmente para puxar galhos de árvores e se defender."
+                    },
+                    {
+                        era: "Período Cretáceo • Titanossauros",
+                        question: "9- Qual colossal saurópode descoberto na América do Sul é considerado um dos maiores e mais pesados animais terrestres que já existiram?",
+                        hint: "Dica sutil: Seu nome presta homenagem ao país vizinho onde seus ossos gigantescos foram desenterrados.",
+                        acceptedAnswers: ["argentinossauro", "argentinosaurus"],
+                        displayAnswer: "Argentinossauro",
+                        fact: "Estima-se que o Argentinossauro ultrapassava os 30 metros de comprimento e pesava cerca de 70 toneladas."
+                    },
+                    {
+                        era: "Período Permiano • Sinapsídeos",
+                        question: "10- Qual predador pré-histórico com uma grande vela nas costas viveu antes dos dinossauros e é mais aparentado aos mamíferos do que aos répteis?",
+                        hint: "Nota do diário: Aparece em todo pacote de brinquedos de dinossauro, mas na verdade é um primo distante seu!",
+                        acceptedAnswers: ["dimetrodon", "dimetrodonte"],
+                        displayAnswer: "Dimetrodon",
+                        fact: "Muitas vezes confundido com um dinossauro, o Dimetrodon foi extinto cerca de 40 milhões de anos antes do surgimento dos primeiros dinossauros."
+                    },
+                    {
+                        era: "Escala de Tempo Geológico • Era Mesozoica",
+                        question: "11- Qual foi o primeiro período da Era Mesozoica, no qual surgiram os primeiros dinossauros e os primeiros mamíferos?",
+                        hint: "Dica sutil: O prefixo 'Tri-' vem das três camadas de rocha distintas estudadas na Alemanha.",
+                        acceptedAnswers: ["triassico", "periodo triassico"],
+                        displayAnswer: "Triássico",
+                        fact: "O Período Triássico começou após a maior extinção em massa da história da Terra, a extinção do Permiano-Triássico."
+                    },
+                    {
+                        era: "Período Cretáceo • Escamados Marinhos",
+                        question: "12- Qual gigantesco lagarto marinho predador dominou os oceanos no final do Cretáceo, sendo parente distante das cobras e dos dragões-de-komodo?",
+                        hint: "Piada de acampamento: A estrela do tanque aquático de Jurassic World — e adorava um petisco voador!",
+                        acceptedAnswers: ["mosassauro", "mosasaurus"],
+                        displayAnswer: "Mosassauro",
+                        fact: "O Mosassauro possuía uma segunda fileira de dentes no céu da boca para impedir que suas presas escorregassem."
+                    }
+                ]
+            }
+        };
+
+        // Variáveis de estado do Quiz
+        let selectedDifficulty = 'facil';
+        let activeQuestions = quizLevels[selectedDifficulty].questions;
+        let currentQuestionIndex = 0;
+        let pontos = 0;
+        let quizEarnedPoints = 0;
+        let quizSpeedBonusPoints = 0;
+        let questionStartTime = null;
+        let startTime = null;
+        let timerInterval = null;
+        let isAnswered = false;
+        let previousScreenBeforeShop = 'start';
+        let activeShopTab = 'avatars';
+
+        // Estado persistente do jogador (Pontos totais, itens comprados e equipados)
+        const STORAGE_KEY = 'quiz_pre_historico_save_v2';
+        let playerProfile = loadPlayerProfile();
+
+        function loadPlayerProfile() {
+            const defaultProfile = {
+                playerName: 'Explorador',
+                totalPoints: 0,
+                unlockedItems: ['avatar_amonite', 'cosmetic_padrao', 'title_aprendiz'],
+                equippedAvatar: 'avatar_amonite',
+                equippedCosmetic: 'cosmetic_padrao',
+                equippedTitle: 'title_aprendiz'
+            };
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    return { ...defaultProfile, ...parsed };
+                }
+            } catch (e) {
+                // Ignora erro caso localStorage não esteja disponível
+            }
+            return defaultProfile;
+        }
+
+        function savePlayerProfile() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(playerProfile));
+            } catch (e) {
+                // Ignora erro caso localStorage não esteja disponível
+            }
+        }
+
+        // Catálogo da Loja Paleontológica
+        const shopCatalog = {
+            avatars: [
+                {
+                    id: 'avatar_amonite',
+                    name: 'Fóssil Amonite',
+                    icon: '🐚',
+                    animClass: '',
+                    animLabel: 'Padrão',
+                    price: 0,
+                    desc: 'Emblema clássico de todo explorador iniciante.'
+                },
+                {
+                    id: 'avatar_trex',
+                    name: 'T-Rex Rugindo (Animado)',
+                    icon: '🦖',
+                    animClass: 'animate-avatar-chomp',
+                    animLabel: 'Animado • Mordida',
+                    price: 250,
+                    desc: 'Foto de perfil animada com movimento de ataque do rei do Cretáceo.'
+                },
+                {
+                    id: 'avatar_sauropode',
+                    name: 'Braquiossauro Flutuante',
+                    icon: '🦕',
+                    animClass: 'animate-avatar-float',
+                    animLabel: 'Animado • Flutuação',
+                    price: 400,
+                    desc: 'Avatar animado suave que flutua acima das copas jurássicas.'
+                },
+                {
+                    id: 'avatar_mamute',
+                    name: 'Mamute Glacial (Animado)',
+                    icon: '🦣',
+                    animClass: 'animate-avatar-float',
+                    animLabel: 'Animado • Tundra',
+                    price: 550,
+                    desc: 'Retrato animado da Era do Gelo com movimento contínuo.'
+                },
+                {
+                    id: 'avatar_vulcao',
+                    name: 'Vulcão em Erupção (Animado)',
+                    icon: '🌋',
+                    animClass: 'animate-avatar-glow',
+                    animLabel: 'Animado • Pulso Ígneo',
+                    price: 750,
+                    desc: 'Brilho incandescente pulsante diretamente do núcleo da Terra.'
+                },
+                {
+                    id: 'avatar_dna',
+                    name: 'Hélice de Âmbar (Animado)',
+                    icon: '🧬',
+                    animClass: 'animate-avatar-glow',
+                    animLabel: 'Animado • Brilho Dourado',
+                    price: 1000,
+                    desc: 'Código genético ancestral com aura luminosa animada.'
+                }
+            ],
+            cosmetics: [
+                {
+                    id: 'cosmetic_padrao',
+                    name: 'Moldura de Campo Simples',
+                    previewIcon: '🌿',
+                    avatarRingClass: '',
+                    cardGlowClass: '',
+                    price: 0,
+                    desc: 'Acabamento padrão da expedição.'
+                },
+                {
+                    id: 'cosmetic_ambar',
+                    name: 'Moldura Aura de Âmbar',
+                    previewIcon: '🟠',
+                    avatarRingClass: 'cosmetic-amber-aura',
+                    cardGlowClass: 'cosmetic-card-royal',
+                    price: 300,
+                    desc: 'Adiciona um brilho dourado de resina fóssil no avatar e nos painéis.'
+                },
+                {
+                    id: 'cosmetic_esmeralda',
+                    name: 'Aura Bioluminescente',
+                    previewIcon: '✨',
+                    avatarRingClass: 'cosmetic-emerald-pulse',
+                    cardGlowClass: 'cosmetic-card-bio',
+                    price: 550,
+                    desc: 'Ilumina seu perfil e os cards do quiz com energia verde esmeralda.'
+                },
+                {
+                    id: 'cosmetic_magma',
+                    name: 'Anel Vulcânico Animado',
+                    previewIcon: '🔥',
+                    avatarRingClass: 'cosmetic-magma-ring',
+                    cardGlowClass: 'cosmetic-card-royal',
+                    price: 850,
+                    desc: 'Moldura animada com gradiente de lava em movimento constante.'
+                }
+            ],
+            titles: [
+                {
+                    id: 'title_aprendiz',
+                    name: 'Aprendiz de Campo',
+                    badgeText: 'Aprendiz de Campo',
+                    price: 0,
+                    desc: 'Título inicial da sua jornada científica.'
+                },
+                {
+                    id: 'title_cacador',
+                    name: 'Caçador de Fósseis',
+                    badgeText: 'Caçador de Fósseis',
+                    price: 300,
+                    desc: 'Para quem já desenterrou seus primeiros segredos.'
+                },
+                {
+                    id: 'title_guardiao',
+                    name: 'Guardião do Âmbar',
+                    badgeText: 'Guardião do Âmbar',
+                    price: 500,
+                    desc: 'Protetor das relíquias da Era Mesozoica.'
+                },
+                {
+                    id: 'title_senhor',
+                    name: 'Senhor do Cretáceo',
+                    badgeText: 'Senhor do Cretáceo',
+                    price: 800,
+                    desc: 'Reconhecido em todos os sítios de escavação.'
+                },
+                {
+                    id: 'title_lenda',
+                    name: 'Lenda da Pangeia',
+                    badgeText: 'Lenda da Pangeia',
+                    price: 1200,
+                    desc: 'O título supremo reservado aos mestres absolutos.'
+                }
+            ],
+            facts: [
+                {
+                    id: 'fact_coracao',
+                    name: 'Curiosidade #1: Gigantes de Sangue',
+                    price: 150,
+                    preview: 'Habilite para revelar o segredo cardíaco dos grandes saurópodes...',
+                    secretText: 'Um saurópode gigante como o Argentinossauro precisava de um coração com cerca de 400 kg e pressão arterial altíssima para bombear sangue até o cérebro no topo do pescoço!'
+                },
+                {
+                    id: 'fact_som',
+                    name: 'Curiosidade #2: A Voz dos Dinossauros',
+                    price: 250,
+                    preview: 'Habilite para descobrir como realmente soavam os dinossauros...',
+                    secretText: 'Diferente dos rugidos dos filmes, estudos em fósseis de laringe e caixas de ressonância mostram que muitos dinossauros emitiam sons graves de boca fechada, parecidos com o estrondeio de crocodilos e avestruzes.'
+                },
+                {
+                    id: 'fact_penas',
+                    name: 'Curiosidade #3: Dinossauros Coloridos',
+                    price: 350,
+                    preview: 'Habilite para saber como descobrimos as cores reais de espécies extintas...',
+                    secretText: 'Analisando melanossomos microscópicos em penas fossilizadas, cientistas descobriram que o Sinosauropteryx tinha uma cauda listrada em laranja e branco, e o Microraptor tinha penas pretas iridescentes!'
+                },
+                {
+                    id: 'fact_meteorito',
+                    name: 'Curiosidade #4: O Dia do Impacto',
+                    price: 500,
+                    preview: 'Habilite para conhecer a energia do asteroide de Chicxulub...',
+                    secretText: 'O asteroide que atingiu a Terra há 66 milhões de anos tinha cerca de 10 a 15 km de largura e liberou uma energia equivalente a 10 bilhões de bombas atômicas, escurecendo o céu por anos.'
+                }
+            ]
+        };
+
+        // Referências aos elementos do DOM
+        const screenStart = document.getElementById('screen-start');
+        const screenQuiz = document.getElementById('screen-quiz');
+        const screenResult = document.getElementById('screen-result');
+        const screenShop = document.getElementById('screen-shop');
+
+        const headerAvatarBox = document.getElementById('header-avatar-box');
+        const headerSubtitle = document.getElementById('header-subtitle');
+        const headerEquippedTitle = document.getElementById('header-equipped-title');
+        const walletPointsDisplay = document.getElementById('wallet-points-display');
+        const btnToggleShop = document.getElementById('btn-toggle-shop');
+        const timerBadge = document.getElementById('timer-badge');
+        const timerDisplay = document.getElementById('timer-display');
+
+        const profileSidebarCard = document.getElementById('profile-sidebar-card');
+        const sidebarAvatarBox = document.getElementById('sidebar-avatar-box');
+        const playerNameInput = document.getElementById('player-name-input');
+        const sidebarEquippedTitle = document.getElementById('sidebar-equipped-title');
+        const sidebarBonesDisplay = document.getElementById('sidebar-bones-display');
+        const btnEditProfileSidebar = document.getElementById('btn-edit-profile-sidebar');
+
+        const difficultyCards = document.querySelectorAll('.difficulty-card');
+        const btnStart = document.getElementById('btn-start');
+        const btnStartText = document.getElementById('btn-start-text');
+
+        const questionCounter = document.getElementById('question-counter');
+        const scoreLive = document.getElementById('score-live');
+        const progressBar = document.getElementById('progress-bar');
+        const questionEmblemContainer = document.getElementById('question-emblem-container');
+        const fieldLogTag = document.getElementById('field-log-tag');
+        const emblemCaption = document.getElementById('emblem-caption');
+        const questionEra = document.getElementById('question-era');
+        const questionText = document.getElementById('question-text');
+        const questionHint = document.getElementById('question-hint');
+
+        const answerForm = document.getElementById('answer-form');
+        const answerInput = document.getElementById('answer-input');
+        const validationMsg = document.getElementById('validation-msg');
+        const btnSubmit = document.getElementById('btn-submit');
+
+        const feedbackBox = document.getElementById('feedback-box');
+        const feedbackIcon = document.getElementById('feedback-icon');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackPointsBadge = document.getElementById('feedback-points-badge');
+        const feedbackDetail = document.getElementById('feedback-detail');
+        const btnNext = document.getElementById('btn-next');
+        const btnNextText = document.getElementById('btn-next-text');
+
+        const resultDifficultyBadge = document.getElementById('result-difficulty-badge');
+        const finalScoreText = document.getElementById('final-score-text');
+        const statCorrect = document.getElementById('stat-correct');
+        const statTotal = document.getElementById('stat-total');
+        const statAccuracy = document.getElementById('stat-accuracy');
+        const statPointsEarned = document.getElementById('stat-points-earned');
+        const statSpeedBonus = document.getElementById('stat-speed-bonus');
+        const statTime = document.getElementById('stat-time');
+        const rankTitle = document.getElementById('rank-title');
+        const rankDesc = document.getElementById('rank-desc');
+
+        const shopBalanceDisplay = document.getElementById('shop-balance-display');
+        const shopToast = document.getElementById('shop-toast');
+        const shopTabBtns = document.querySelectorAll('.shop-tab-btn');
+        const shopItemsGrid = document.getElementById('shop-items-grid');
+        const btnCloseShop = document.getElementById('btn-close-shop');
+        const btnResultShop = document.getElementById('btn-result-shop');
+
+        // Emblemas e Ilustrações Temáticas de Expedição & Geologia (12 variações neutras)
+        const expeditionEmblems = [
+            {
+                caption: "Escavação Estratigráfica • Ferramentas de Campo",
+                svg: `<svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 21l9-9"/>
+                    <path d="M12.5 3.5c3.5 0 6.5 2.5 8 6l-2.5 1.5c-1-2.5-3-4-5.5-4.5L12.5 3.5z"/>
+                    <path d="M15 15l5.5 5.5"/>
+                    <path d="M13 17l2-2 3 3-2 2z"/>
+                </svg>`
+            },
+            {
+                caption: "Resina Fóssil • Inclusão Botânica em Âmbar",
+                svg: `<svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2.5C7.5 6.5 5 10.5 5 14.5a7 7 0 0014 0c0-4-2.5-8-7-12z"/>
+                    <path d="M12 10v7"/>
+                    <path d="M12 14l-2.5-2"/>
+                    <path d="M12 12.5l2.5-2"/>
+                    <path d="M9.5 16.5c1.5.5 3.5.5 5 0"/>
+                </svg>`
+            },
+            {
+                caption: "Navegação Geográfica • Bússola de Expedição",
+                svg: `<svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"/>
+                    <circle cx="12" cy="12" r="6" stroke-dasharray="2 2"/>
+                    <polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5 15.5 8.5" fill="currentColor" fill-opacity="0.25"/>
+                    <line x1="12" y1="2" x2="12" y2="4"/>
+                    <line x1="12" y1="20" x2="12" y2="22"/>
+                </svg>`
+            },
+            {
+                caption: "Estratigrafia • Camadas de Rocha Sedimentar",
+                svg: `<svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 7c3-1.5 6 1.5 9 0s6-1.5 9 0"/>
+                    <path d="M3 12c3 1.5 6-1.5 9 0s6 1.5 9 0"/>
+                    <path d="M3 17c3-1.5 6 1.5 9 0s6-1.5 9 0"/>
+                    <rect x="3" y="4" width="18" height="16" rx="3"/>
+                </svg>`
+            },
+            {
+                caption: "Inspeção Microscópica • Lupa de Paleontólogo",
+                svg: `<svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="10.5" cy="10.5" r="6.5"/>
+                    <line x1="15.5" y1="15.5" x2="21" y2="21"/>
+                    <path d="M8 10.5c0-1.4 1.1-2.5 2.5-2.5"/>
+                    <path d="M9 13l3-3"/>
+                </svg>`
+            },
+            {
+                caption: "Atividade Tectônica • Vulcão da Era Mesozoica",
+                svg: `<svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 20l6-11h6l6 11H3z"/>
+                    <path d="M9 9c1 1.5 2 1.5 3 0s2-1.5 3 0"/>
+                    <path d="M12 6V3"/>
+                    <path d="M9 5L7.5 3.5"/>
+                    <path d="M15 5l1.5-1.5"/>
+                </svg>`
+            },
+            {
+                caption: "Paleogenética • Código Ancestral Preservado",
+                svg: `<svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 3c0 4.5 10 4.5 10 9s-10 4.5-10 9"/>
+                    <path d="M17 3c0 4.5-10 4.5-10 9s10 4.5 10 9"/>
+                    <line x1="8.5" y1="6" x2="15.5" y2="6"/>
+                    <line x1="8.5" y1="18" x2="15.5" y2="18"/>
+                </svg>`
+            },
+            {
+                caption: "Tempo Geológico • Ampulheta das Eras",
+                svg: `<svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2h12"/>
+                    <path d="M6 22h12"/>
+                    <path d="M7 2v4.5a5 5 0 002.2 4.1L12 12l2.8-1.4A5 5 0 0017 6.5V2"/>
+                    <path d="M7 22v-4.5a5 5 0 012.2-4.1L12 12l2.8 1.4a5 5 0 012.2 4.1V22"/>
+                </svg>`
+            },
+            {
+                caption: "Icnologia • Pegada Tridáctila Fossilizada",
+                svg: `<svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3l-1.5 7"/>
+                    <path d="M7 6l3 5"/>
+                    <path d="M17 6l-3 5"/>
+                    <path d="M9.5 11.5c0 2.5 1 6.5 2.5 6.5s2.5-4 2.5-6.5"/>
+                    <ellipse cx="12" cy="12" rx="8" ry="9" stroke-dasharray="3 2"/>
+                </svg>`
+            },
+            {
+                caption: "Cartografia Antiga • Pergaminho de Coordenadas",
+                svg: `<svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8 4h11a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2z"/>
+                    <path d="M8 9h6"/>
+                    <path d="M8 13h8"/>
+                    <path d="M15 16l2-2m0 2l-2-2"/>
+                </svg>`
+            },
+            {
+                caption: "Oologia Fóssil • Casca Calcificada Preservada",
+                svg: `<svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3C8 3 5.5 8.5 5.5 14a6.5 6.5 0 0013 0c0-5.5-2.5-11-6.5-11z"/>
+                    <path d="M6.5 12l3 2 2.5-2 2.5 2 3-1.5"/>
+                </svg>`
+            },
+            {
+                caption: "Fóssil Guia • Concha Espiral de Amonite",
+                svg: `<svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2z"/>
+                    <path d="M12 12c0-2.8 2.2-5 5-5s5 2.2 5 5-2.2 5-5 5c-4.4 0-8-3.6-8-8 0-5.5 4.5-10 10-10"/>
+                    <path d="M19 2c2.2 2.2 3 5.5 3 10 0 6.1-4.9 11-11 11-5.5 0-9-4.5-9-9"/>
+                </svg>`
+            }
+        ];
+
+        /**
+         * Normaliza textos removendo acentos, espaços extras e deixando em minúsculo
+         */
+        function normalizeText(text) {
+            return text
+                .toString()
+                .trim()
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "");
+        }
+
+        /**
+         * Formata o tempo decorrido em mm:ss ou segundos detalhados
+         */
+        function formatElapsedTime(ms, detailed = false) {
+            const totalSeconds = Math.floor(ms / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+
+            if (detailed) {
+                if (minutes > 0) {
+                    return `${minutes}m ${seconds}s`;
+                }
+                const tenths = Math.floor((ms % 1000) / 100);
+                return `${seconds}.${tenths}s`;
+            }
+
+            return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        /**
+         * Inicia o cronômetro em tempo real
+         */
+        function startTimer() {
+            clearInterval(timerInterval);
+            startTime = Date.now();
+            timerDisplay.textContent = "00:00";
+            timerBadge.classList.remove('hidden');
+            timerBadge.classList.add('flex');
+
+            timerInterval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                timerDisplay.textContent = formatElapsedTime(elapsed, false);
+            }, 250);
+        }
+
+        /**
+         * Para o cronômetro e retorna o tempo total gasto em milissegundos
+         */
+        function stopTimer() {
+            clearInterval(timerInterval);
+            return startTime ? Date.now() - startTime : 0;
+        }
+
+        /**
+         * Atualiza a seleção visual e o estado do nível de dificuldade escolhido
+         */
+        function selectDifficulty(levelKey) {
+            if (!quizLevels[levelKey]) return;
+            selectedDifficulty = levelKey;
+            activeQuestions = quizLevels[levelKey].questions;
+
+            difficultyCards.forEach(card => {
+                if (card.dataset.difficulty === levelKey) {
+                    card.classList.remove('bg-jungle-950/60', 'border-emerald-800/50', 'hover:border-emerald-600/80');
+                    card.classList.add('bg-jungle-950/80', 'border-amber-400', 'shadow-lg', 'shadow-amber-500/10');
+                } else {
+                    card.classList.remove('bg-jungle-950/80', 'border-amber-400', 'shadow-lg', 'shadow-amber-500/10');
+                    card.classList.add('bg-jungle-950/60', 'border-emerald-800/50', 'hover:border-emerald-600/80');
+                }
+            });
+
+            btnStartText.textContent = `Iniciar Expedição (${activeQuestions.length} Perguntas)`;
+        }
+
+        /**
+         * Inicia ou reinicia o quiz no nível de dificuldade selecionado
+         */
+        function startQuiz() {
+            activeQuestions = quizLevels[selectedDifficulty].questions;
+            currentQuestionIndex = 0;
+            pontos = 0;
+            quizEarnedPoints = 0;
+            quizSpeedBonusPoints = 0;
+            isAnswered = false;
+
+            headerSubtitle.textContent = quizLevels[selectedDifficulty].name;
+
+            screenStart.classList.add('hidden');
+            screenResult.classList.add('hidden');
+            screenShop.classList.add('hidden');
+            screenQuiz.classList.remove('hidden');
+
+            startTimer();
+            renderQuestion();
+        }
+
+        /**
+         * Volta para a tela inicial para escolher outro nível
+         */
+        function returnToLevelSelect() {
+            clearInterval(timerInterval);
+            timerBadge.classList.add('hidden');
+            timerBadge.classList.remove('flex');
+            headerSubtitle.textContent = "Expedição Jurássica";
+
+            screenQuiz.classList.add('hidden');
+            screenResult.classList.add('hidden');
+            screenShop.classList.add('hidden');
+            screenStart.classList.remove('hidden');
+            screenStart.classList.remove('animate-fade-in');
+            void screenStart.offsetWidth;
+            screenStart.classList.add('animate-fade-in');
+        }
+
+        /**
+         * Renderiza a pergunta atual na tela com animação suave
+         */
+        function renderQuestion() {
+            isAnswered = false;
+            questionStartTime = Date.now();
+            const currentData = activeQuestions[currentQuestionIndex];
+            const questionNumber = currentQuestionIndex + 1;
+            const totalQuestions = activeQuestions.length;
+
+            screenQuiz.classList.remove('animate-fade-in');
+            void screenQuiz.offsetWidth;
+            screenQuiz.classList.add('animate-fade-in');
+
+            questionCounter.textContent = `Pergunta ${questionNumber} de ${totalQuestions}`;
+            scoreLive.textContent = `Acertos: ${pontos} • +${quizEarnedPoints} 🦴`;
+            progressBar.style.width = `${(questionNumber / totalQuestions) * 100}%`;
+
+            // Atualiza o emblema decorativo neutro da pergunta atual
+            const emblem = expeditionEmblems[currentQuestionIndex % expeditionEmblems.length];
+            const paddedNumber = String(questionNumber).padStart(2, '0');
+            fieldLogTag.textContent = `Registro de Campo #${paddedNumber}`;
+            emblemCaption.textContent = emblem.caption;
+            questionEmblemContainer.innerHTML = emblem.svg;
+
+            questionEra.textContent = currentData.era;
+            questionText.textContent = currentData.question;
+            questionHint.textContent = currentData.hint || "Observe atentamente os registros desta era geológica.";
+
+            answerInput.value = '';
+            answerInput.disabled = false;
+            validationMsg.classList.add('hidden');
+            btnSubmit.classList.remove('hidden');
+            feedbackBox.classList.add('hidden');
+            feedbackPointsBadge.classList.add('hidden');
+
+            if (currentQuestionIndex === totalQuestions - 1) {
+                btnNextText.textContent = "Ver Resultado Final";
+            } else {
+                btnNextText.textContent = "Próxima Pergunta";
+            }
+
+            setTimeout(() => answerInput.focus(), 100);
+        }
+
+        /**
+         * Calcula a pontuação base + bônus por velocidade de resposta
+         */
+        function calculateQuestionScore(responseTimeMs) {
+            const basePoints = 100;
+            const secondsTaken = responseTimeMs / 1000;
+            let speedBonus = 0;
+
+            if (secondsTaken <= 4) {
+                speedBonus = 60;
+            } else if (secondsTaken <= 8) {
+                speedBonus = 40;
+            } else if (secondsTaken <= 14) {
+                speedBonus = 20;
+            } else if (secondsTaken <= 20) {
+                speedBonus = 10;
+            }
+
+            return {
+                basePoints,
+                speedBonus,
+                total: basePoints + speedBonus,
+                secondsTaken: secondsTaken.toFixed(1)
+            };
+        }
+
+        /**
+         * Verifica a resposta digitada pelo usuário
+         */
+        function handleAnswerSubmit(event) {
+            event.preventDefault();
+            if (isAnswered) return;
+
+            const rawInput = answerInput.value;
+            const normalizedInput = normalizeText(rawInput);
+
+            if (!normalizedInput) {
+                validationMsg.classList.remove('hidden');
+                answerInput.focus();
+                return;
+            }
+
+            validationMsg.classList.add('hidden');
+            isAnswered = true;
+            answerInput.disabled = true;
+            btnSubmit.classList.add('hidden');
+
+            const responseTimeMs = questionStartTime ? (Date.now() - questionStartTime) : 15000;
+            const currentData = activeQuestions[currentQuestionIndex];
+            const isCorrect = currentData.acceptedAnswers.includes(normalizedInput);
+
+            feedbackBox.classList.remove('hidden', 'bg-emerald-950/90', 'border-emerald-500/60', 'bg-red-950/90', 'border-red-500/60');
+            feedbackIcon.classList.remove('bg-emerald-500/20', 'text-emerald-400', 'bg-red-500/20', 'text-red-400');
+
+            if (isCorrect) {
+                pontos = pontos + 1;
+                const scoreResult = calculateQuestionScore(responseTimeMs);
+                quizEarnedPoints += scoreResult.total;
+                quizSpeedBonusPoints += scoreResult.speedBonus;
+
+                // Adiciona aos ossos acumulados do jogador e salva
+                playerProfile.totalPoints += scoreResult.total;
+                savePlayerProfile();
+                updateProfileUI();
+
+                scoreLive.textContent = `Acertos: ${pontos} • +${quizEarnedPoints} 🦴`;
+
+                feedbackBox.classList.add('bg-emerald-950/90', 'border-emerald-500/60');
+                feedbackIcon.classList.add('bg-emerald-500/20', 'text-emerald-400');
+                feedbackIcon.textContent = "✓";
+                feedbackTitle.textContent = "Parabéns, acertou!";
+                feedbackTitle.className = "font-bold text-lg text-emerald-300";
+
+                feedbackPointsBadge.classList.remove('hidden');
+                feedbackPointsBadge.textContent = scoreResult.speedBonus > 0
+                    ? `+${scoreResult.basePoints} 🦴 • ⚡ +${scoreResult.speedBonus} vel. (${scoreResult.secondsTaken}s)`
+                    : `+${scoreResult.basePoints} 🦴 (${scoreResult.secondsTaken}s)`;
+
+                feedbackDetail.textContent = currentData.fact;
+            } else {
+                feedbackBox.classList.add('bg-red-950/90', 'border-red-500/60');
+                feedbackIcon.classList.add('bg-red-500/20', 'text-red-400');
+                feedbackIcon.textContent = "✕";
+                feedbackTitle.textContent = `Errou, a resposta era ${currentData.displayAnswer}.`;
+                feedbackTitle.className = "font-bold text-lg text-red-300";
+                feedbackPointsBadge.classList.add('hidden');
+                feedbackDetail.textContent = currentData.fact;
+            }
+
+            setTimeout(() => btnNext.focus(), 50);
+        }
+
+        /**
+         * Avança para a próxima pergunta ou finaliza o quiz
+         */
+        function handleNextStep() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < activeQuestions.length) {
+                renderQuestion();
+            } else {
+                showFinalResults();
+            }
+        }
+
+        /**
+         * Exibe a Tela Final com a quantidade de acertos, pontos ganhos e tempo total
+         */
+        function showFinalResults() {
+            const totalElapsedMs = stopTimer();
+            const totalQuestions = activeQuestions.length;
+            const accuracyPercent = Math.round((pontos / totalQuestions) * 100);
+            const levelData = quizLevels[selectedDifficulty];
+
+            screenQuiz.classList.add('hidden');
+            screenResult.classList.remove('hidden');
+            screenResult.classList.add('animate-fade-in');
+
+            resultDifficultyBadge.textContent = `${levelData.name} • ${totalQuestions} Perguntas`;
+            finalScoreText.innerHTML = `Você acertou <span class="text-amber-400 font-bold">${pontos}</span> de ${totalQuestions} perguntas.`;
+            statCorrect.textContent = pontos;
+            statTotal.textContent = ` / ${totalQuestions}`;
+            statAccuracy.textContent = `${accuracyPercent}% de precisão`;
+            statPointsEarned.textContent = `+${quizEarnedPoints} 🦴`;
+            statSpeedBonus.textContent = `+${quizSpeedBonusPoints} bônus velocidade`;
+            statTime.textContent = formatElapsedTime(totalElapsedMs, true);
+
+            // Define classificação paleontológica proporcional ao percentual de acertos
+            if (accuracyPercent === 100) {
+                rankTitle.textContent = `Lenda do ${levelData.shortName} 🦖`;
+                rankDesc.textContent = "Pontuação perfeita! Você domina completamente os segredos desta expedição!";
+            } else if (accuracyPercent >= 70) {
+                rankTitle.textContent = "Paleontólogo Sênior 🦴";
+                rankDesc.textContent = "Excelente escavação! Seu conhecimento sobre a pré-história impressiona.";
+            } else if (accuracyPercent >= 40) {
+                rankTitle.textContent = "Pesquisador de Campo 🧭";
+                rankDesc.textContent = "Bom trabalho! Algumas espécies ainda estão escondidas sob as camadas de rocha.";
+            } else {
+                rankTitle.textContent = "Turista no Parque Jurássico 🌋";
+                rankDesc.textContent = "Cuidado com os predadores! Tente novamente para aprimorar suas descobertas.";
+            }
+        }
+
+        /**
+         * Atualiza o cabeçalho e o painel lateral esquerdo com nome, saldo de ossos, foto animada, cosmético e título
+         */
+        function updateProfileUI() {
+            // Sincroniza unidade de ossos no cabeçalho
+            const headerPointsUnit = walletPointsDisplay.nextElementSibling;
+            const headerPointsEmoji = walletPointsDisplay.previousElementSibling;
+            if (headerPointsEmoji) headerPointsEmoji.textContent = '🦴';
+            if (headerPointsUnit) headerPointsUnit.textContent = 'ossos';
+
+            walletPointsDisplay.textContent = playerProfile.totalPoints;
+            sidebarBonesDisplay.textContent = playerProfile.totalPoints;
+
+            if (document.activeElement !== playerNameInput) {
+                playerNameInput.value = playerProfile.playerName || 'Explorador';
+            }
+
+            if (shopBalanceDisplay) {
+                shopBalanceDisplay.textContent = `${playerProfile.totalPoints} ossos`;
+            }
+
+            // Aplica cosmético de moldura nos avatares e brilho nos painéis
+            headerAvatarBox.className = 'w-11 h-11 rounded-xl bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-inner text-2xl transition-all';
+            sidebarAvatarBox.className = 'w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-2xl flex-shrink-0 transition-all';
+
+            const cosmeticItem = shopCatalog.cosmetics.find(c => c.id === playerProfile.equippedCosmetic);
+            if (cosmeticItem && cosmeticItem.avatarRingClass) {
+                headerAvatarBox.classList.add(cosmeticItem.avatarRingClass);
+                sidebarAvatarBox.classList.add(cosmeticItem.avatarRingClass);
+            }
+
+            [screenStart, screenQuiz, screenResult, profileSidebarCard].forEach(sec => {
+                if (!sec) return;
+                sec.classList.remove('cosmetic-card-royal', 'cosmetic-card-bio');
+                if (cosmeticItem && cosmeticItem.cardGlowClass) {
+                    sec.classList.add(cosmeticItem.cardGlowClass);
+                }
+            });
+
+            // Renderiza foto de perfil (com suporte a animação) no cabeçalho e no painel esquerdo
+            const avatarItem = shopCatalog.avatars.find(a => a.id === playerProfile.equippedAvatar);
+            if (avatarItem && avatarItem.id !== 'avatar_amonite') {
+                const avatarHtml = `<span class="inline-block leading-none ${avatarItem.animClass || ''}">${avatarItem.icon}</span>`;
+                headerAvatarBox.innerHTML = avatarHtml;
+                sidebarAvatarBox.innerHTML = avatarHtml;
+            } else {
+                headerAvatarBox.innerHTML = `
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2z"/>
+                        <path d="M12 12c0-2.8 2.2-5 5-5s5 2.2 5 5-2.2 5-5 5c-4.4 0-8-3.6-8-8 0-5.5 4.5-10 10-10"/>
+                        <path d="M19 2c2.2 2.2 3 5.5 3 10 0 6.1-4.9 11-11 11-5.5 0-9-4.5-9-9"/>
+                    </svg>
+                `;
+                sidebarAvatarBox.innerHTML = '🐚';
+            }
+
+            const titleItem = shopCatalog.titles.find(t => t.id === playerProfile.equippedTitle);
+            if (titleItem) {
+                headerEquippedTitle.textContent = titleItem.badgeText;
+                headerEquippedTitle.classList.remove('hidden');
+                sidebarEquippedTitle.textContent = titleItem.badgeText;
+            }
+        }
+
+        /**
+         * Abre ou fecha a Aba da Loja
+         */
+        function openShop() {
+            if (!screenShop.classList.contains('hidden')) {
+                closeShop();
+                return;
+            }
+
+            if (!screenStart.classList.contains('hidden')) {
+                previousScreenBeforeShop = 'start';
+            } else if (!screenResult.classList.contains('hidden')) {
+                previousScreenBeforeShop = 'result';
+            } else if (!screenQuiz.classList.contains('hidden')) {
+                previousScreenBeforeShop = 'quiz';
+            }
+
+            screenStart.classList.add('hidden');
+            screenQuiz.classList.add('hidden');
+            screenResult.classList.add('hidden');
+            screenShop.classList.remove('hidden');
+            shopToast.classList.add('hidden');
+
+            updateProfileUI();
+            renderShopItems();
+        }
+
+        function closeShop() {
+            screenShop.classList.add('hidden');
+            if (previousScreenBeforeShop === 'result') {
+                screenResult.classList.remove('hidden');
+            } else if (previousScreenBeforeShop === 'quiz') {
+                screenQuiz.classList.remove('hidden');
+            } else {
+                screenStart.classList.remove('hidden');
+            }
+        }
+
+        function showShopToast(message, isSuccess = true) {
+            shopToast.textContent = message;
+            shopToast.classList.remove('hidden', 'bg-emerald-950/90', 'border-emerald-500/50', 'text-emerald-300', 'bg-red-950/90', 'border-red-500/50', 'text-red-300');
+            if (isSuccess) {
+                shopToast.classList.add('bg-emerald-950/90', 'border-emerald-500/50', 'text-emerald-300');
+            } else {
+                shopToast.classList.add('bg-red-950/90', 'border-red-500/50', 'text-red-300');
+            }
+        }
+
+        /**
+         * Renderiza os itens da aba selecionada na loja
+         */
+        function renderShopItems() {
+            shopTabBtns.forEach(btn => {
+                if (btn.dataset.shopTab === activeShopTab) {
+                    btn.classList.add('bg-amber-500', 'text-jungle-950');
+                    btn.classList.remove('text-stone-300', 'hover:text-parchment');
+                } else {
+                    btn.classList.remove('bg-amber-500', 'text-jungle-950');
+                    btn.classList.add('text-stone-300', 'hover:text-parchment');
+                }
+            });
+
+            const items = shopCatalog[activeShopTab] || [];
+            shopItemsGrid.innerHTML = '';
+
+            items.forEach(item => {
+                const isUnlocked = playerProfile.unlockedItems.includes(item.id);
+                const isEquipped =
+                    (activeShopTab === 'avatars' && playerProfile.equippedAvatar === item.id) ||
+                    (activeShopTab === 'cosmetics' && playerProfile.equippedCosmetic === item.id) ||
+                    (activeShopTab === 'titles' && playerProfile.equippedTitle === item.id);
+
+                const card = document.createElement('div');
+                card.className = `bg-jungle-950/85 border ${isEquipped ? 'border-amber-400 shadow-lg shadow-amber-500/10' : 'border-emerald-800/50'} rounded-2xl p-4 flex flex-col justify-between gap-3 transition`;
+
+                let headerVisual = '';
+                if (activeShopTab === 'avatars') {
+                    headerVisual = `
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-2xl">
+                                <span class="inline-block ${item.animClass || ''}">${item.icon}</span>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[10px] font-bold uppercase tracking-wider">
+                                ${item.animLabel}
+                            </span>
+                        </div>`;
+                } else if (activeShopTab === 'cosmetics') {
+                    headerVisual = `
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/40 flex items-center justify-center text-2xl ${item.avatarRingClass || ''}">
+                            ${item.previewIcon}
+                        </div>`;
+                } else if (activeShopTab === 'titles') {
+                    headerVisual = `<span class="inline-block px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold uppercase tracking-wider">${item.badgeText}</span>`;
+                } else {
+                    headerVisual = `<div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-lg">📜</div>`;
+                }
+
+                let bodyContent = '';
+                if (activeShopTab === 'facts') {
+                    bodyContent = isUnlocked
+                        ? `<p class="text-xs sm:text-sm text-amber-200/95 bg-amber-500/10 border border-amber-500/25 rounded-xl p-3 leading-relaxed">${item.secretText}</p>`
+                        : `<p class="text-xs text-stone-400 italic">${item.preview}</p>`;
+                } else {
+                    bodyContent = `<p class="text-xs text-stone-400 leading-relaxed">${item.desc}</p>`;
+                }
+
+                let actionButton = '';
+                if (activeShopTab === 'facts') {
+                    if (isUnlocked) {
+                        actionButton = `<span class="w-full block text-center py-2 px-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold">✓ Curiosidade Habilitada</span>`;
+                    } else {
+                        actionButton = `<button type="button" data-buy-id="${item.id}" class="shop-action-btn w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-jungle-950 font-bold text-xs sm:text-sm transition cursor-pointer">Habilitar por 🦴 ${item.price} ossos</button>`;
+                    }
+                } else {
+                    if (isEquipped) {
+                        actionButton = `<span class="w-full block text-center py-2 px-3 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold">★ Equipado no Perfil</span>`;
+                    } else if (isUnlocked) {
+                        actionButton = `<button type="button" data-equip-id="${item.id}" class="shop-action-btn w-full py-2 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm transition cursor-pointer">Equipar</button>`;
+                    } else {
+                        actionButton = `<button type="button" data-buy-id="${item.id}" class="shop-action-btn w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-jungle-950 font-bold text-xs sm:text-sm transition cursor-pointer">Comprar por 🦴 ${item.price} ossos</button>`;
+                    }
+                }
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-2.5">
+                            ${headerVisual}
+                            ${!isUnlocked ? `<span class="text-xs font-mono font-bold text-amber-400">🦴 ${item.price} ossos</span>` : ''}
+                        </div>
+                        <h3 class="font-bold text-sm sm:text-base text-parchment mb-1">${item.name}</h3>
+                        ${bodyContent}
+                    </div>
+                    <div class="pt-1">
+                        ${actionButton}
+                    </div>
+                `;
+
+                shopItemsGrid.appendChild(card);
+            });
+
+            // Eventos dos botões de compra e equipar
+            shopItemsGrid.querySelectorAll('.shop-action-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const buyId = btn.dataset.buyId;
+                    const equipId = btn.dataset.equipId;
+                    if (buyId) handlePurchaseItem(buyId);
+                    if (equipId) handleEquipItem(equipId);
+                });
+            });
+        }
+
+        function handlePurchaseItem(itemId) {
+            const items = shopCatalog[activeShopTab] || [];
+            const item = items.find(i => i.id === itemId);
+            if (!item || playerProfile.unlockedItems.includes(item.id)) return;
+
+            if (playerProfile.totalPoints < item.price) {
+                showShopToast(`Ossos insuficientes! Você precisa de ${item.price} ossos para adquirir "${item.name}".`, false);
+                return;
+            }
+
+            playerProfile.totalPoints -= item.price;
+            playerProfile.unlockedItems.push(item.id);
+
+            if (activeShopTab === 'avatars') {
+                playerProfile.equippedAvatar = item.id;
+            } else if (activeShopTab === 'cosmetics') {
+                playerProfile.equippedCosmetic = item.id;
+            } else if (activeShopTab === 'titles') {
+                playerProfile.equippedTitle = item.id;
+            }
+
+            savePlayerProfile();
+            updateProfileUI();
+            renderShopItems();
+            showShopToast(`Você habilitou "${item.name}"!`, true);
+        }
+
+        function handleEquipItem(itemId) {
+            if (!playerProfile.unlockedItems.includes(itemId)) return;
+
+            if (activeShopTab === 'avatars') {
+                playerProfile.equippedAvatar = itemId;
+            } else if (activeShopTab === 'cosmetics') {
+                playerProfile.equippedCosmetic = itemId;
+            } else if (activeShopTab === 'titles') {
+                playerProfile.equippedTitle = itemId;
+            }
+
+            savePlayerProfile();
+            updateProfileUI();
+            renderShopItems();
+            showShopToast(`Item equipado com sucesso no seu perfil!`, true);
+        }
+
+        // Event Listeners
+        difficultyCards.forEach(card => {
+            card.addEventListener('click', () => selectDifficulty(card.dataset.difficulty));
+        });
+
+        btnStart.addEventListener('click', startQuiz);
+        answerForm.addEventListener('submit', handleAnswerSubmit);
+        btnNext.addEventListener('click', handleNextStep);
+        document.getElementById('btn-restart').addEventListener('click', startQuiz);
+        document.getElementById('btn-change-level').addEventListener('click', returnToLevelSelect);
+
+        btnToggleShop.addEventListener('click', openShop);
+        btnCloseShop.addEventListener('click', closeShop);
+        btnResultShop.addEventListener('click', openShop);
+
+        // Eventos do Painel de Perfil no Canto Esquerdo
+        playerNameInput.addEventListener('input', () => {
+            playerProfile.playerName = playerNameInput.value.trim() || 'Explorador';
+            savePlayerProfile();
+        });
+
+        btnEditProfileSidebar.addEventListener('click', () => {
+            activeShopTab = 'avatars';
+            if (screenShop.classList.contains('hidden')) {
+                openShop();
+            } else {
+                renderShopItems();
+            }
+        });
+
+        shopTabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                activeShopTab = btn.dataset.shopTab;
+                shopToast.classList.add('hidden');
+                renderShopItems();
+            });
+        });
+
+        // Inicializa a interface do perfil ao carregar a página
+        updateProfileUI();
+    </script>
+</body>
+</html>
